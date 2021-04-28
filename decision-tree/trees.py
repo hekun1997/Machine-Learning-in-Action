@@ -76,6 +76,7 @@ def majority_cnt(class_list):
                                 key=operator.itemgetter, reverse=True)
     return sorted_class_count[0][0]
 
+
 def create_tree(data_set, labels):
     class_list = [example[-1] for example in data_set]
     if class_list.count(class_list[0]) == len(class_list):
@@ -90,10 +91,12 @@ def create_tree(data_set, labels):
     unique_vals = set(feat_vals)
     for value in unique_vals:
         sub_labels = labels[:]
-        my_tree[best_feat_label][value] = create_tree(split_data_set(), (data_set, best_feat, value), sub_labels)
+        my_tree[best_feat_label][value] = create_tree(split_data_set(data_set, best_feat, value), sub_labels)
     return my_tree
+
 
 # test
 if __name__ == '__main__':
     data_set, labels = create_data_set()
-    print choose_best_feature_to_split(data_set)
+    my_tree = create_tree(data_set, labels)
+    print my_tree
